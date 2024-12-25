@@ -157,3 +157,10 @@ fun CreateMediaRequestDto.toMedia(): Media {
         videoLink=this.videoLink
     )
 }
+
+fun User.toUserResponseDto(): UserResponseDto {
+    return UserResponseDto(
+        id = this.id,
+        password = this.password
+    )
+}

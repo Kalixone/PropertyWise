@@ -1,0 +1,165 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: kalixone
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: kalixone
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 3
+      author: kalixone
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user
+                    references: user(id)
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_role
+                    references: role(id)
+              - addPrimaryKey:
+                  columnNames: user_id, role_id
+                  constraintName: pk_user_roles
+
+  - changeSet:
+      id: 4
+      author: kalixone
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: name
+                  value: 'USER'
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: name
+                  value: 'ADMIN'
+
+  - changeSet:
+      id: 5
+      author: kalixone
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  value: 'user@example.com'
+              - column:
+                  name: password
+                  value: '$2a$10$of9yUmjdNJTibOFfIvG9TeHK1pZHH/BbnR0bavYqSqC0lKwb9Q7/2'
+              - column:
+                  name: first_name
+                  value: 'John'
+              - column:
+                  name: last_name
+                  value: 'Doe'
+
+  - changeSet:
+      id: 6
+      author: kalixone
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  value: 'admin@example.com'
+              - column:
+                  name: password
+                  value: '$2a$10$of9yUmjdNJTibOFfIvG9TeHK1pZHH/BbnR0bavYqSqC0lKwb9Q7/2'
+              - column:
+                  name: first_name
+                  value: 'Admin'
+              - column:
+                  name: last_name
+                  value: 'User'
+
+  - changeSet:
+      id: 7
+      author: kalixone
+      changes:
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: '1'
+              - column:
+                  name: role_id
+                  value: '1'
+
+  - changeSet:
+      id: 8
+      author: kalixone
+      changes:
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: '2'
+              - column:
+                  name: role_id
+                  value: '2'
