@@ -15,6 +15,6 @@ data class OfferStatus(
     // val name: String <- nazwa uzytkoniwka np imie i nazwisko osoby ktora to dodała te oferte
 )
 
-enum class Status() {
+enum class Status {
     AVAILABLE, RESERVED, SOLD
 }

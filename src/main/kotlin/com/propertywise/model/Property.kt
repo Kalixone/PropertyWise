@@ -28,6 +28,6 @@ data class Property(
     @OneToOne(cascade = [CascadeType.ALL])
     val financialDetails: FinancialDetails)
 
-enum class Type() {
-    APARTAMENT, RESIDENCE, PLOT
+enum class Type {
+    APARTMENT, RESIDENCE, PLOT
 }

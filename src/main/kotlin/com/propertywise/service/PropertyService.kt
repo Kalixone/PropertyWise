@@ -6,5 +6,11 @@ import org.springframework.stereotype.Service
 
 @Service
 interface PropertyService {
-    fun addProperty(createPropertyRequestDto: CreatePropertyRequestDto) : PropertyDto
+    fun createProperty(createPropertyRequestDto: CreatePropertyRequestDto) : PropertyDto
+
+    fun getById(id: Long) : PropertyDto
+
+    fun deleteById(id: Long)
+
+    fun getAll() : List<PropertyDto>
 }

@@ -19,14 +19,14 @@ data class TechnicalDetails(
     val propertyCondition: PropertyCondition
 )
 
-enum class Heating() {
+enum class Heating {
     GAS, ELECTRIC, CENTRAL
 }
 
-enum class ConstructionMaterial() {
+enum class ConstructionMaterial {
     BRICK, WOOD, CONCRETE
 }
 
-enum class PropertyCondition() {
+enum class PropertyCondition {
     FOR_RENOVATION, READY_TO_MOVE_IN
 }
