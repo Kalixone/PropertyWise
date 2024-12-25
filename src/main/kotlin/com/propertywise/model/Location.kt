@@ -10,9 +10,9 @@ data class Location(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
-    val address: String,
-    val city: String,
-    val postalCode: String,
-    val neighborhood: String
+    var address: String,
+    var city: String,
+    var postalCode: String,
+    var neighborhood: String
     // latitude longtitude in future
 )

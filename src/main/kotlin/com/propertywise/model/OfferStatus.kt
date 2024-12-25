@@ -9,9 +9,9 @@ data class OfferStatus(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
     @Enumerated(EnumType.STRING)
-    val status: Status,
-    val createdDate: LocalDate,
-    val lastUpdatedDate: LocalDate,
+    var status: Status,
+    var createdDate: LocalDate,
+    var lastUpdatedDate: LocalDate,
     // val name: String <- nazwa uzytkoniwka np imie i nazwisko osoby ktora to dodała te oferte
 )
 

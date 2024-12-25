@@ -7,16 +7,16 @@ data class TechnicalDetails(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
-    val numberOfRooms: Int,
-    val floor: Int,
-    val totalFloors: Int,
-    val yearBuild: Int,
+    var numberOfRooms: Int,
+    var floor: Int,
+    var totalFloors: Int,
+    var yearBuild: Int,
     @Enumerated(EnumType.STRING)
-    val heating: Heating,
+    var heating: Heating,
     @Enumerated(EnumType.STRING)
-    val constructionMaterial: ConstructionMaterial,
+    var constructionMaterial: ConstructionMaterial,
     @Enumerated(EnumType.STRING)
-    val propertyCondition: PropertyCondition
+    var propertyCondition: PropertyCondition
 )
 
 enum class Heating {

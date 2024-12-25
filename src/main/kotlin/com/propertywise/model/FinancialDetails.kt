@@ -11,7 +11,7 @@ data class FinancialDetails(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
-    val monthlyRent: BigDecimal,
-    val additionalCosts: BigDecimal,
-    val deposit: BigDecimal
+    var monthlyRent: BigDecimal,
+    var additionalCosts: BigDecimal,
+    var deposit: BigDecimal
 )

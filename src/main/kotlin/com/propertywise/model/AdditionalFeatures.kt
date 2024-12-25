@@ -7,9 +7,9 @@ data class AdditionalFeatures(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
-    val balcony: Boolean,
-    val garden: Boolean,
-    val garage: Boolean,
-    val elevator: Boolean,
-    val furnished: Boolean
+    var balcony: Boolean,
+    var garden: Boolean,
+    var garage: Boolean,
+    var elevator: Boolean,
+    var furnished: Boolean
 )

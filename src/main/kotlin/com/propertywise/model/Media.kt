@@ -7,6 +7,6 @@ data class Media(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
-    val photos: MutableList<String> = mutableListOf(),
-    val videoLink: String
+    var photos: MutableList<String> = mutableListOf(),
+    var videoLink: String
 )

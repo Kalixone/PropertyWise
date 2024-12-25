@@ -8,13 +8,13 @@ data class Property(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
-    val title: String,
-    val description: String,
-    val price: BigDecimal,
-    val pricePerSquareMeter: Double,
-    val area: Double,
+    var title: String,
+    var description: String,
+    var price: BigDecimal,
+    var pricePerSquareMeter: Double,
+    var area: Double,
     @Enumerated(EnumType.STRING)
-    val type: Type,
+    var type: Type,
     @OneToOne(cascade = [CascadeType.ALL])
     val location: Location,
     @OneToOne(cascade = [CascadeType.ALL])
