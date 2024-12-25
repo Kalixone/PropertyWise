@@ -9,11 +9,12 @@ data class PropertyDto(
     val description: String,
     val price: BigDecimal,
     val pricePerSquareMeter: Double,
+    val area: Double,
     val type: Type,
     val location: LocationDto,
     val technicalDetails: TechnicalDetailsDto,
     val additionalFeatures: AdditionalFeaturesDto,
     val media: MediaDto,
     val status: OfferStatusDto,
-    val financialDetails: FinancialDetailsDto
+    val financialDetails: FinancialDetailsDto,
 )

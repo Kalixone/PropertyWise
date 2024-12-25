@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/api/property")
@@ -55,4 +57,32 @@ class PropertyController(private val propertyService: PropertyService) {
     fun partialUpdate(@PathVariable id: Long, @RequestBody propertyPatchRequestDto: PropertyPatchRequestDto) : PropertyDto {
         return propertyService.partialUpdate(id, propertyPatchRequestDto)
     }
-}
+
+    @GetMapping("/city")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Find properties by city", description = "Retrieve properties located in the specified city.")
+    fun findByLocationCity(@RequestParam city: String) : List<PropertyDto> {
+        return propertyService.findByLocationCity(city)
+    }
+
+    @GetMapping("/price")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Find properties by price range", description = "Retrieve properties within the specified price range.")
+    fun findByPriceBetween(@RequestParam from: BigDecimal, @RequestParam to: BigDecimal): List<PropertyDto> {
+        return propertyService.findByPriceBetween(from, to)
+    }
+
+    @GetMapping("/rooms")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Find properties by number of rooms", description = "Retrieves properties within a specified number of rooms range.")
+    fun findByTechnicalsDetailsNumberOfRooms(@RequestParam from: Int, @RequestParam to: Int): List<PropertyDto> {
+        return propertyService.findByTechnicalsDetailsNumberOfRooms(from,to)
+    }
+
+    @GetMapping("/area")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Find properties by area range", description = "Retrieves properties within a specified area range.")
+    fun findByAreaBetween(@RequestParam from: Double, @RequestParam to: Double): List<PropertyDto> {
+        return propertyService.findByAreaBetween(from, to)
+    }
+ }

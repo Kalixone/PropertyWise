@@ -10,6 +10,7 @@ fun Property.toPropertyDto(): PropertyDto {
         description=this.description,
         price=this.price,
         pricePerSquareMeter=this.pricePerSquareMeter,
+        area=this.area,
         type=this.type,
         location=this.location.toLocationDto(),
         technicalDetails=this.technicalsDetails.toTechnicalDetailsDto(),

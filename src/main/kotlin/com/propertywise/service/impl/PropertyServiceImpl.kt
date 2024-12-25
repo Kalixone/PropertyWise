@@ -10,7 +10,7 @@ import com.propertywise.service.PropertyService
 import com.propertywise.toModel
 import com.propertywise.toPropertyDto
 import org.springframework.stereotype.Service
-import java.lang.Exception
+import java.math.BigDecimal
 
 @Service
 class PropertyServiceImpl(
@@ -103,5 +103,21 @@ class PropertyServiceImpl(
 
         val updatedProperty = propertyRepository.save(property)
         return updatedProperty.toPropertyDto()
+    }
+
+    override fun findByLocationCity(city: String): List<PropertyDto> {
+        return propertyRepository.findByLocationCity(city).map { property -> property.toPropertyDto() }.toList()
+    }
+
+    override fun findByPriceBetween(from: BigDecimal, to: BigDecimal): List<PropertyDto> {
+        return propertyRepository.findByPriceBetween(from, to).map { property -> property.toPropertyDto() }.toList()
+    }
+
+    override fun findByTechnicalsDetailsNumberOfRooms(from: Int, to: Int): List<PropertyDto> {
+        return propertyRepository.findByTechnicalsDetailsNumberOfRooms(from, to).map { property -> property.toPropertyDto() }.toList()
+    }
+
+    override fun findByAreaBetween(from: Double, to: Double): List<PropertyDto> {
+        return propertyRepository.findByAreaBetween(from, to).map { property -> property.toPropertyDto() }.toList()
     }
 }
