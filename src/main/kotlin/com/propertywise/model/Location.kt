@@ -14,5 +14,4 @@ data class Location(
     var city: String,
     var postalCode: String,
     var neighborhood: String
-    // latitude longtitude in future
 )

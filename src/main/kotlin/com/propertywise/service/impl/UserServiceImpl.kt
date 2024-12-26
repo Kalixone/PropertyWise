@@ -35,6 +35,7 @@ class UserServiceImpl(
             firstName = requestDto.firstName,
             lastName = requestDto.lastName,
             password = passwordEncoder.encode(requestDto.password),
+            favourites = mutableListOf(),
             roles = roles
         )
 

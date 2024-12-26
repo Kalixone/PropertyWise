@@ -19,7 +19,9 @@ data class User(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
-    val roles: Set<Role>
+    val roles: Set<Role>,
+    @OneToMany(fetch = FetchType.EAGER)
+    val favourites: MutableList<Property>
 ): UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority?>? {
         return roles

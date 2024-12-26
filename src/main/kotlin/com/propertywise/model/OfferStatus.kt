@@ -10,9 +10,8 @@ data class OfferStatus(
     val id: Long?,
     @Enumerated(EnumType.STRING)
     var status: Status,
-    var createdDate: LocalDate,
+    var createdDate: LocalDate = LocalDate.now(),
     var lastUpdatedDate: LocalDate,
-    // val name: String <- nazwa uzytkoniwka np imie i nazwisko osoby ktora to dodała te oferte
 )
 
 enum class Status {

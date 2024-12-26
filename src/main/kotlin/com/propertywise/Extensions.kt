@@ -2,6 +2,7 @@ package com.propertywise
 
 import com.propertywise.dto.*
 import com.propertywise.model.*
+import java.time.LocalDate
 
 fun Property.toPropertyDto(): PropertyDto {
     return PropertyDto(
@@ -137,7 +138,7 @@ fun CreateOfferStatusRequestDto.toOfferStatus(): OfferStatus {
     return OfferStatus(
         id= null,
         status=this.status,
-        createdDate=this.createdDate,
+        createdDate= LocalDate.now(),
         lastUpdatedDate=this.lastUpdatedDate
     )
 }

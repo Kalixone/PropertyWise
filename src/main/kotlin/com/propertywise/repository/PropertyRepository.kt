@@ -1,6 +1,7 @@
 package com.propertywise.repository
 
 import com.propertywise.model.Property
+import com.propertywise.model.Type
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -17,4 +18,6 @@ interface PropertyRepository: JpaRepository<Property, Long> {
     fun findByTechnicalsDetailsNumberOfRooms(@Param("from") from: Int, @Param("to") to: Int): List<Property>
 
     fun findByAreaBetween(from: Double, to: Double): List<Property>
+
+    fun findByType(type: Type): List<Property>
 }

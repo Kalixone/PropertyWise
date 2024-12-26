@@ -5,16 +5,21 @@ import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
 import com.propertywise.exceptions.PropertyNotFoundException
 import com.propertywise.model.Property
+import com.propertywise.model.Type
+import com.propertywise.model.User
 import com.propertywise.repository.PropertyRepository
+import com.propertywise.repository.UserRepository
 import com.propertywise.service.PropertyService
 import com.propertywise.toModel
 import com.propertywise.toPropertyDto
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
+import java.time.LocalDate
 
 @Service
 class PropertyServiceImpl(
-    private val propertyRepository: PropertyRepository)
+    private val propertyRepository: PropertyRepository, private val userRepository: UserRepository)
     : PropertyService {
 
     override fun createProperty(createPropertyRequestDto: CreatePropertyRequestDto): PropertyDto {
@@ -102,6 +107,7 @@ class PropertyServiceImpl(
         }
 
         val updatedProperty = propertyRepository.save(property)
+        updatedProperty.status.lastUpdatedDate = LocalDate.now()
         return updatedProperty.toPropertyDto()
     }
 
@@ -119,5 +125,22 @@ class PropertyServiceImpl(
 
     override fun findByAreaBetween(from: Double, to: Double): List<PropertyDto> {
         return propertyRepository.findByAreaBetween(from, to).map { property -> property.toPropertyDto() }.toList()
+    }
+
+    override fun findByType(type: Type): List<PropertyDto> {
+        return propertyRepository.findByType(type).map { property -> property.toPropertyDto() }.toList()
+    }
+
+    override fun addToFavourites(id: Long, authentication: Authentication) {
+       val principal = authentication.principal as User
+       val property = propertyRepository.findById(id).orElseThrow { PropertyNotFoundException("Property with ID $id not found")}
+
+        principal.favourites.add(property)
+        userRepository.save(principal)
+    }
+
+    override fun getAllFavourites(authentication: Authentication): List<PropertyDto> {
+        val principal = authentication.principal as User
+        return principal.favourites.map { property -> property.toPropertyDto() }.toList()
     }
 }
