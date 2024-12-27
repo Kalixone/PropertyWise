@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDate
 
 @Service
@@ -28,6 +29,14 @@ class PropertyServiceImpl(
 
     override fun createProperty(createPropertyRequestDto: CreatePropertyRequestDto): PropertyDto {
         val propertyModel = createPropertyRequestDto.toModel()
+
+        val price = propertyModel.price
+        val area = propertyModel.area
+
+        val areaBigDecimal = BigDecimal(area)
+        val pricePerSquare = price.divide(areaBigDecimal, 2, RoundingMode.HALF_UP)
+
+        propertyModel.pricePerSquareMeter = pricePerSquare.toDouble()
         propertyRepository.save(propertyModel)
         return propertyModel.toPropertyDto()
     }
@@ -52,7 +61,6 @@ class PropertyServiceImpl(
         propertyPatchRequestDto.title?.let { property.title = it }
         propertyPatchRequestDto.description?.let { property.description = it }
         propertyPatchRequestDto.price?.let { property.price = it }
-        propertyPatchRequestDto.pricePerSquareMeter?.let { property.pricePerSquareMeter = it }
         propertyPatchRequestDto.area?.let { property.area = it }
         propertyPatchRequestDto.type?.let { property.type = it }
 

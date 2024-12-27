@@ -13,4 +13,5 @@ interface UserService {
     fun areaThresholdForNotifications(authentication: Authentication, requestDto: UserAreaRequestDto): UserDto
 
     fun priceThresholdForNotifications(authentication: Authentication, requestDto: UserPriceRequestDto): UserDto
+    fun deleteUser(id: Long, authentication: Authentication)
 }

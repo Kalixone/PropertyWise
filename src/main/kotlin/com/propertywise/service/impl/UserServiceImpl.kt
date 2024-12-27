@@ -3,6 +3,7 @@ package com.propertywise.service.impl
 import com.propertywise.dto.*
 import com.propertywise.exceptions.RegistrationException
 import com.propertywise.exceptions.RoleNotFoundException
+import com.propertywise.exceptions.UnauthorizedAccessException
 import com.propertywise.model.RoleName
 import com.propertywise.model.User
 import com.propertywise.repository.RoleRepository
@@ -56,5 +57,14 @@ class UserServiceImpl(
         principal.priceThresholdForNotifications = requestDto.price
         val user = userRepository.save(principal)
         return user.toUserDto()
+    }
+
+    override fun deleteUser(id: Long, authentication: Authentication) {
+        val principal = authentication.principal as User
+        if (principal.roles.any { it.name == RoleName.ADMIN }) {
+            userRepository.deleteById(id)
+        } else {
+            throw UnauthorizedAccessException("You do not have permission to delete the user.")
+        }
     }
 }

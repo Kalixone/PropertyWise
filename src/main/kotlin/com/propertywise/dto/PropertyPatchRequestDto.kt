@@ -7,7 +7,6 @@ data class PropertyPatchRequestDto(
     val title: String? = null,
     val description: String? = null,
     val price: BigDecimal? = null,
-    val pricePerSquareMeter: Double? = null,
     val area: Double? = null,
     val type: Type? = null,
     val location: LocationPatchRequestDto? = null,
