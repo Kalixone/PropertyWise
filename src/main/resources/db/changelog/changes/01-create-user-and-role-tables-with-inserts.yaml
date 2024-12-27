@@ -163,3 +163,21 @@ databaseChangeLog:
               - column:
                   name: role_id
                   value: '2'
+
+  - changeSet:
+      id: 9
+      author: kalixone
+      changes:
+        - addColumn:
+            tableName: user
+            columns:
+              - column:
+                  name: area_threshold_for_notifications
+                  type: DOUBLE
+                  constraints:
+                    nullable: true
+              - column:
+                  name: price_threshold_for_notifications
+                  type: DECIMAL(19, 2)
+                  constraints:
+                    nullable: true

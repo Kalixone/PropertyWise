@@ -3,6 +3,7 @@ package com.propertywise.model
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.math.BigDecimal
 
 @Entity
 data class User(
@@ -21,7 +22,10 @@ data class User(
     )
     val roles: Set<Role>,
     @OneToMany(fetch = FetchType.EAGER)
-    val favourites: MutableList<Property>
+    val favourites: MutableList<Property>,
+    var areaThresholdForNotifications: Double? = null,
+    var priceThresholdForNotifications: BigDecimal? = null
+
 ): UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority?>? {
         return roles

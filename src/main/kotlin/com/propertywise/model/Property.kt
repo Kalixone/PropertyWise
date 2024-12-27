@@ -10,6 +10,7 @@ data class Property(
     val id: Long?,
     var title: String,
     var description: String,
+    var contactEmail: String,
     var price: BigDecimal,
     var pricePerSquareMeter: Double,
     var area: Double,

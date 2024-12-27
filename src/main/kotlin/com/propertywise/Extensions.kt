@@ -9,6 +9,7 @@ fun Property.toPropertyDto(): PropertyDto {
         id=this.id ?: 0,
         title=this.title,
         description=this.description,
+        contactEmail=this.contactEmail,
         price=this.price,
         pricePerSquareMeter=this.pricePerSquareMeter,
         area=this.area,
@@ -87,6 +88,7 @@ fun CreatePropertyRequestDto.toModel(): Property {
         id=null,
         title=this.title,
         description=this.description,
+        contactEmail=this.contactEmail,
         price=this.price,
         pricePerSquareMeter=this.pricePerSquareMeter,
         area=this.area,
@@ -164,5 +166,26 @@ fun User.toUserResponseDto(): UserResponseDto {
     return UserResponseDto(
         id = this.id,
         password = this.password
+    )
+}
+fun Email.toEmailDto(): EmailDto {
+    return EmailDto(
+        id = this.id ?: 0,
+        sender = this.sender,
+        recipient = this.recipient,
+        subject = this.subject,
+        content = this.content,
+        sentAt = this.sentAt
+    )
+}
+
+fun User.toUserDto(): UserDto {
+    return UserDto(
+        id = this.id ?: 0,
+        email = this.email,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        areaThresholdForNotifications = this.areaThresholdForNotifications,
+        priceThresholdForNotifications = this.priceThresholdForNotifications
     )
 }

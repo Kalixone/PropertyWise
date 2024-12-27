@@ -7,6 +7,7 @@ data class CreatePropertyRequestDto(
     val title: String,
     val description: String,
     val price: BigDecimal,
+    val contactEmail: String,
     val pricePerSquareMeter: Double,
     val area: Double,
     val type: Type,

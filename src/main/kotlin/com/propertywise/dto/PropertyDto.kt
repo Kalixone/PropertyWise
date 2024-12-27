@@ -7,6 +7,7 @@ data class PropertyDto(
     val id: Long,
     val title: String,
     val description: String,
+    val contactEmail: String,
     val price: BigDecimal,
     val pricePerSquareMeter: Double,
     val area: Double,

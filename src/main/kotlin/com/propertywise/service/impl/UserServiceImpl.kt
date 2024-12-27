@@ -1,7 +1,6 @@
 package com.propertywise.service.impl
 
-import com.propertywise.dto.UserRegistrationRequestDto
-import com.propertywise.dto.UserResponseDto
+import com.propertywise.dto.*
 import com.propertywise.exceptions.RegistrationException
 import com.propertywise.exceptions.RoleNotFoundException
 import com.propertywise.model.RoleName
@@ -9,7 +8,9 @@ import com.propertywise.model.User
 import com.propertywise.repository.RoleRepository
 import com.propertywise.repository.UserRepository
 import com.propertywise.service.UserService
+import com.propertywise.toUserDto
 import com.propertywise.toUserResponseDto
+import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -41,5 +42,19 @@ class UserServiceImpl(
 
         val savedUser = userRepository.save(user)
         return savedUser.toUserResponseDto()
+    }
+
+    override fun areaThresholdForNotifications(authentication: Authentication, requestDto: UserAreaRequestDto): UserDto {
+        val principal = authentication.principal as User
+        principal.areaThresholdForNotifications = requestDto.area
+        val user = userRepository.save(principal)
+        return user.toUserDto()
+    }
+
+    override fun priceThresholdForNotifications(authentication: Authentication, requestDto: UserPriceRequestDto): UserDto {
+        val principal = authentication.principal as User
+        principal.priceThresholdForNotifications = requestDto.price
+        val user = userRepository.save(principal)
+        return user.toUserDto()
     }
 }

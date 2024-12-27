@@ -9,9 +9,11 @@ import com.propertywise.model.Type
 import com.propertywise.model.User
 import com.propertywise.repository.PropertyRepository
 import com.propertywise.repository.UserRepository
+import com.propertywise.service.EmailService
 import com.propertywise.service.PropertyService
 import com.propertywise.toModel
 import com.propertywise.toPropertyDto
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -19,7 +21,9 @@ import java.time.LocalDate
 
 @Service
 class PropertyServiceImpl(
-    private val propertyRepository: PropertyRepository, private val userRepository: UserRepository)
+    private val propertyRepository: PropertyRepository,
+    private val userRepository: UserRepository,
+    private val emailService: EmailService)
     : PropertyService {
 
     override fun createProperty(createPropertyRequestDto: CreatePropertyRequestDto): PropertyDto {
@@ -120,7 +124,8 @@ class PropertyServiceImpl(
     }
 
     override fun findByTechnicalsDetailsNumberOfRooms(from: Int, to: Int): List<PropertyDto> {
-        return propertyRepository.findByTechnicalsDetailsNumberOfRooms(from, to).map { property -> property.toPropertyDto() }.toList()
+        return propertyRepository.findByTechnicalsDetailsNumberOfRooms(from, to)
+            .map { property -> property.toPropertyDto() }.toList()
     }
 
     override fun findByAreaBetween(from: Double, to: Double): List<PropertyDto> {
@@ -132,8 +137,9 @@ class PropertyServiceImpl(
     }
 
     override fun addToFavourites(id: Long, authentication: Authentication) {
-       val principal = authentication.principal as User
-       val property = propertyRepository.findById(id).orElseThrow { PropertyNotFoundException("Property with ID $id not found")}
+        val principal = authentication.principal as User
+        val property =
+            propertyRepository.findById(id).orElseThrow { PropertyNotFoundException("Property with ID $id not found") }
 
         principal.favourites.add(property)
         userRepository.save(principal)
@@ -143,4 +149,39 @@ class PropertyServiceImpl(
         val principal = authentication.principal as User
         return principal.favourites.map { property -> property.toPropertyDto() }.toList()
     }
-}
+
+    @Scheduled(cron = "0 0 21 * * ?")
+    override fun sendPropertyNotificationsToUser() {
+        val users = userRepository.findAll()
+
+        for (user in users) {
+            val areaThreshold = user.areaThresholdForNotifications
+            val priceThreshold = user.priceThresholdForNotifications
+
+            val properties: List<Property> = propertyRepository.findAll().filter { property ->
+                (areaThreshold != null && property.area <= areaThreshold) ||
+                        (priceThreshold != null && property.price <= priceThreshold)
+            }
+
+            val emailContent = if (properties.isNotEmpty()) {
+                buildString {
+                    append("<h1>New Properties matching your filters:</h1>")
+                    for (property in properties) {
+                        append("<p><strong>${property.title}</strong><br>")
+                        append("Area: ${property.area} m²<br>")
+                        append("Price: ${property.price}<br></p>")
+                    }
+                }
+            } else {
+                "Sorry, we could not find any properties matching your filters."
+            }
+
+            if (user.email.contains("@gmail.com")) {
+                emailService.sendEmail(user.email,
+                    if (properties.isNotEmpty()) "New Properties Based on Your Filters" else "No Properties Found Based on Your Filters",
+                    emailContent, null)
+            } else {
+                println("Email not sent, user email does not contain @gmail.com")
+            }
+        }
+    } }
