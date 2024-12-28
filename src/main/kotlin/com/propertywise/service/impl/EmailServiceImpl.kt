@@ -1,6 +1,7 @@
 package com.propertywise.service.impl
 
 import com.propertywise.dto.EmailDto
+import com.propertywise.exceptions.EmailSendingException
 import com.propertywise.model.Email
 import com.propertywise.repository.EmailRepository
 import com.propertywise.repository.UserRepository
@@ -34,7 +35,7 @@ class EmailServiceImpl(
 
             val username = authentication?.name
             val appUser = username?.let { userRepository.findByEmail(it) }
-                ?: throw RuntimeException("User not found for email: $username")
+                ?: throw EmailSendingException("User not found for email: $username")
 
             val email = Email(
                 id = null,
@@ -49,7 +50,7 @@ class EmailServiceImpl(
             emailRepository.save(email)
             email.toEmailDto()
         } catch (e: MessagingException) {
-            throw RuntimeException("Error while sending email", e)
+            throw EmailSendingException("Error while sending email")
         }
     }
 }

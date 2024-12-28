@@ -36,9 +36,14 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.29</version>  <!-- Użyj najnowszej wersji -->
+			<version>8.0.29</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,18 +56,18 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
-			<version>0.11.5</version>  <!-- Możesz wybrać najnowszą wersję -->
+			<version>0.11.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
-			<version>0.11.5</version>  <!-- Możesz wybrać najnowszą wersję -->
+			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
-			<version>0.11.5</version>  <!-- Możesz wybrać najnowszą wersję -->
+			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -102,12 +107,10 @@
 			<artifactId>kotlin-test-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Liquibase Dependency -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>4.21.0</version> <!-- Użyj najnowszej wersji Liquibase -->
+			<version>4.21.0</version>
 		</dependency>
 	</dependencies>
 
@@ -158,21 +161,18 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-
-			<!-- Liquibase Plugin for Maven -->
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>4.21.0</version> <!-- Wersja Liquibase Plugin -->
+				<version>4.21.0</version>
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/your_database</url>
 					<username>your_db_username</username>
 					<password>your_db_password</password>
 					<driver>com.mysql.cj.jdbc.Driver</driver>
-					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile> <!-- Plik changelog -->
+					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

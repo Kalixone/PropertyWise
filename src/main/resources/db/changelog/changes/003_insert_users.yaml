@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: kalixone
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  value: 'user@example.com'
+              - column:
+                  name: password
+                  value: '$2a$10$of9yUmjdNJTibOFfIvG9TeHK1pZHH/BbnR0bavYqSqC0lKwb9Q7/2'
+              - column:
+                  name: first_name
+                  value: 'John'
+              - column:
+                  name: last_name
+                  value: 'Doe'
+
+  - changeSet:
+      id: 7
+      author: kalixone
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  value: 'admin@example.com'
+              - column:
+                  name: password
+                  value: '$2a$10$of9yUmjdNJTibOFfIvG9TeHK1pZHH/BbnR0bavYqSqC0lKwb9Q7/2'
+              - column:
+                  name: first_name
+                  value: 'Admin'
+              - column:
+                  name: last_name
+                  value: 'User'

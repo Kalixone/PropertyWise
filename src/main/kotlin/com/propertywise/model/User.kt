@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 @Entity
 data class User(
@@ -24,7 +25,9 @@ data class User(
     @OneToMany(fetch = FetchType.EAGER)
     val favourites: MutableList<Property>,
     var areaThresholdForNotifications: Double? = null,
-    var priceThresholdForNotifications: BigDecimal? = null
+    var priceThresholdForNotifications: BigDecimal? = null,
+    @Column(nullable = true)
+    var lastNotificationDate: LocalDateTime? = null
 
 ): UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority?>? {

@@ -12,8 +12,7 @@ import java.util.*
 
 @Component
 class JwtUtil(
-    @Value("\${jwt.secret}") secretString: String
-) {
+    @Value("\${jwt.secret}") secretString: String) {
     private val secret: Key = Keys.hmacShaKeyFor(secretString.toByteArray(StandardCharsets.UTF_8))
 
     @Value("\${jwt.expiration}")

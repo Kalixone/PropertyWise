@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class PropertyServiceImpl(
@@ -157,17 +158,20 @@ class PropertyServiceImpl(
         return principal.favourites.map { property -> property.toPropertyDto() }.toList()
     }
 
-    @Scheduled(cron = "0 0 21 * * ?")
+    @Scheduled(cron = "0 30 18 * * ?")
     override fun sendPropertyNotificationsToUser() {
         val users = userRepository.findAll()
 
         for (user in users) {
             val areaThreshold = user.areaThresholdForNotifications
             val priceThreshold = user.priceThresholdForNotifications
+            val lastNotificationDate = user.lastNotificationDate ?: LocalDateTime.MIN
 
             val properties: List<Property> = propertyRepository.findAll().filter { property ->
-                (areaThreshold != null && property.area <= areaThreshold) ||
-                        (priceThreshold != null && property.price <= priceThreshold)
+                val createdDate = property.status.createdDate
+                (createdDate.isAfter(lastNotificationDate.toLocalDate()) || property.status.lastUpdatedDate.isAfter(lastNotificationDate.toLocalDate())) &&
+                        ((areaThreshold != null && property.area <= areaThreshold) ||
+                                (priceThreshold != null && property.price <= priceThreshold))
             }
 
             val emailContent = if (properties.isNotEmpty()) {
@@ -187,6 +191,9 @@ class PropertyServiceImpl(
                 emailService.sendEmail(user.email,
                     if (properties.isNotEmpty()) "New Properties Based on Your Filters" else "No Properties Found Based on Your Filters",
                     emailContent, null)
+
+                user.lastNotificationDate = LocalDateTime.now()
+                userRepository.save(user)
             } else {
                 println("Email not sent, user email does not contain @gmail.com")
             }
@@ -201,7 +208,7 @@ class PropertyServiceImpl(
         val countByProvince = propertyRepository.findByProvince(province).count()
 
         if (countByProvince <= 0) {
-            throw IllegalArgumentException("No real estate in the province: $province")
+            throw PropertyNotFoundException("No real estate in the province: $province")
         }
 
         val sum = propertyRepository.findByProvince(province).sumOf { property -> property.pricePerSquareMeter }
@@ -214,7 +221,7 @@ class PropertyServiceImpl(
         val propertiesEndYear = propertyRepository.findByProvinceAndYear(province, endYear)
 
         if (propertiesStartYear.isEmpty() || propertiesEndYear.isEmpty()) {
-            throw IllegalArgumentException("No properties found for the given years and province.")
+            throw PropertyNotFoundException("No properties found for the given years and province.")
         }
 
         val averagePriceStartYear = propertiesStartYear.map { it.pricePerSquareMeter }.average()

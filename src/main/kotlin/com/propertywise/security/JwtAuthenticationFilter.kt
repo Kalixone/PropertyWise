@@ -17,8 +17,8 @@ import org.springframework.util.StringUtils
 @Component
 class JwtAuthenticationFilter(
     private val jwtUtil: JwtUtil,
-    private val userDetailsService: UserDetailsService
-) : OncePerRequestFilter() {
+    private val userDetailsService: UserDetailsService)
+    : OncePerRequestFilter() {
 
     companion object {
         private const val AUTHORIZATION_HEADER = "Authorization"

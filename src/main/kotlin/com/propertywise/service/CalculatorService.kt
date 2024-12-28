@@ -11,5 +11,3 @@ interface CalculatorService {
     fun calculateRentalYield(rentalYieldCalculationRequest: RentalYieldCalculationRequest): RentalYieldCalculationResult
     fun calculateProportionalRentalCost(proportionalRentalCostRequest: ProportionalRentalCostRequest): ProportionalRentalCostResult
 }
-
-

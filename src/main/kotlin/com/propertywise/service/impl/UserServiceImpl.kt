@@ -19,8 +19,9 @@ import org.springframework.stereotype.Service
 class UserServiceImpl(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val roleRepository: RoleRepository
-) : UserService {
+    private val roleRepository: RoleRepository)
+    : UserService {
+
     override fun register(requestDto: UserRegistrationRequestDto): UserResponseDto {
         val existingUser = userRepository.findByEmail(requestDto.email)
         if (existingUser != null) {

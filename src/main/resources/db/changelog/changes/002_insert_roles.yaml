@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: kalixone
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: name
+                  value: 'USER'
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: name
+                  value: 'ADMIN'

@@ -3,12 +3,12 @@ package com.propertywise.service.impl
 import com.propertywise.dto.*
 import com.propertywise.service.CalculatorService
 import org.springframework.stereotype.Service
-import java.text.DecimalFormat
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Service
 class CalculatorServiceImpl: CalculatorService {
+
     override fun loanCalculation(loanCalculationRequest: LoanCalculationRequest): LoanCalculationResult {
         val loanAmount = loanCalculationRequest.loanAmount
         val annualInterestRate = loanCalculationRequest.annualInterestRate
