@@ -4,6 +4,7 @@ import com.propertywise.dto.CreatePropertyRequestDto
 import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
 import com.propertywise.model.Property
+import com.propertywise.model.Province
 import com.propertywise.model.SaleOrRent
 import com.propertywise.model.Type
 import org.springframework.security.core.Authentication
@@ -39,4 +40,8 @@ interface PropertyService {
     fun sendPropertyNotificationsToUser()
 
     fun findBySaleOrRent(saleOrRent: SaleOrRent): List<PropertyDto>
+
+    fun calculateAveragePriceForSquareMeter(province: Province): Double
+
+    fun calculatePriceTrend(startYear: Int, endYear: Int, province: Province): Double
 }

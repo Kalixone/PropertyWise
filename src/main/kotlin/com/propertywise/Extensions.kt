@@ -29,6 +29,7 @@ fun Location.toLocationDto(): LocationDto {
         id=this.id ?: 0,
         address=this.address,
         city=this.city,
+        province=this.province,
         postalCode=this.postalCode,
         neighborhood=this.neighborhood
     )
@@ -109,6 +110,7 @@ fun CreateLocationRequestDto.toLocation(): Location {
         id=null,
         address=this.address,
         city=this.city,
+        province=this.province,
         postalCode=this.postalCode,
         neighborhood=this.neighborhood
     )

@@ -3,6 +3,7 @@ package com.propertywise.controller
 import com.propertywise.dto.CreatePropertyRequestDto
 import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
+import com.propertywise.model.Province
 import com.propertywise.model.SaleOrRent
 import com.propertywise.model.Type
 import com.propertywise.service.PropertyService
@@ -115,5 +116,19 @@ class PropertyController(private val propertyService: PropertyService) {
     @Operation(summary = "Filter properties by sale or rent status", description = "Filters properties based on whether they are for sale or rent.")
     fun getPropertiesBySaleOrRent(@RequestParam saleOrRent: SaleOrRent): List<PropertyDto> {
         return propertyService.findBySaleOrRent(saleOrRent)
+    }
+
+    @GetMapping("/average-price")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Calculate average price per square meter in a province", description = "Calculates the average price per square meter for all properties in a specified province. The user must be authenticated and have the 'USER' role.")
+    fun calculateAveragePriceForSquareMeter(@RequestParam province: Province): Double {
+        return propertyService.calculateAveragePriceForSquareMeter(province)
+    }
+
+    @GetMapping("/price-trend")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Calculate the price trend in a province over a specified time period", description = "Calculates the percentage change in the average price per square meter for properties in a specific province between two years. The user must be authenticated and have the 'USER' role.")
+    fun calculatePriceTrend(@RequestParam startYear: Int, @RequestParam endYear: Int, @RequestParam province: Province): Double {
+        return propertyService.calculatePriceTrend(startYear, endYear, province)
     }
  }

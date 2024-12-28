@@ -4,10 +4,7 @@ import com.propertywise.dto.CreatePropertyRequestDto
 import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
 import com.propertywise.exceptions.PropertyNotFoundException
-import com.propertywise.model.Property
-import com.propertywise.model.SaleOrRent
-import com.propertywise.model.Type
-import com.propertywise.model.User
+import com.propertywise.model.*
 import com.propertywise.repository.PropertyRepository
 import com.propertywise.repository.UserRepository
 import com.propertywise.service.EmailService
@@ -198,5 +195,34 @@ class PropertyServiceImpl(
 
     override fun findBySaleOrRent(saleOrRent: SaleOrRent): List<PropertyDto> {
         return propertyRepository.findBySaleOrRent(saleOrRent).map { property -> property.toPropertyDto() }.toList()
+    }
+
+    override fun calculateAveragePriceForSquareMeter(province: Province): Double {
+        val countByProvince = propertyRepository.findByProvince(province).count()
+
+        if (countByProvince <= 0) {
+            throw IllegalArgumentException("No real estate in the province: $province")
+        }
+
+        val sum = propertyRepository.findByProvince(province).sumOf { property -> property.pricePerSquareMeter }
+
+        return sum / countByProvince
+    }
+
+    override fun calculatePriceTrend(startYear: Int, endYear: Int, province: Province): Double {
+        val propertiesStartYear = propertyRepository.findByProvinceAndYear(province, startYear)
+        val propertiesEndYear = propertyRepository.findByProvinceAndYear(province, endYear)
+
+        if (propertiesStartYear.isEmpty() || propertiesEndYear.isEmpty()) {
+            throw IllegalArgumentException("No properties found for the given years and province.")
+        }
+
+        val averagePriceStartYear = propertiesStartYear.map { it.pricePerSquareMeter }.average()
+
+        val averagePriceEndYear = propertiesEndYear.map { it.pricePerSquareMeter }.average()
+
+        val percentageChange = ((averagePriceEndYear - averagePriceStartYear) / averagePriceStartYear) * 100
+
+        return percentageChange
     }
 }
