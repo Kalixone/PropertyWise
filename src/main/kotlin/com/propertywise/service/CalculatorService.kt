@@ -8,6 +8,8 @@ interface CalculatorService {
     fun loanCalculation(loanCalculationRequest: LoanCalculationRequest): LoanCalculationResult
     fun loanEligibilityCalculator(loanEligibilityCalculatorRequest: LoanEligibilityCalculatorRequest): LoanEligibilityCalculatorResult
     fun depositContributionCalculator(request: DepositContributionRequest): DepositContributionResult
+    fun calculateRentalYield(rentalYieldCalculationRequest: RentalYieldCalculationRequest): RentalYieldCalculationResult
+    fun calculateProportionalRentalCost(proportionalRentalCostRequest: ProportionalRentalCostRequest): ProportionalRentalCostResult
 }
 
 

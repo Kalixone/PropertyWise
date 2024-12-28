@@ -5,6 +5,7 @@ import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
 import com.propertywise.exceptions.PropertyNotFoundException
 import com.propertywise.model.Property
+import com.propertywise.model.SaleOrRent
 import com.propertywise.model.Type
 import com.propertywise.model.User
 import com.propertywise.repository.PropertyRepository
@@ -30,13 +31,14 @@ class PropertyServiceImpl(
     override fun createProperty(createPropertyRequestDto: CreatePropertyRequestDto): PropertyDto {
         val propertyModel = createPropertyRequestDto.toModel()
 
-        val price = propertyModel.price
-        val area = propertyModel.area
+            val price = propertyModel.price
+            val area = propertyModel.area
 
-        val areaBigDecimal = BigDecimal(area)
-        val pricePerSquare = price.divide(areaBigDecimal, 2, RoundingMode.HALF_UP)
+            val areaBigDecimal = BigDecimal(area)
+            val pricePerSquare = price.divide(areaBigDecimal, 2, RoundingMode.HALF_UP)
 
-        propertyModel.pricePerSquareMeter = pricePerSquare.toDouble()
+            propertyModel.pricePerSquareMeter = pricePerSquare.toDouble()
+
         propertyRepository.save(propertyModel)
         return propertyModel.toPropertyDto()
     }
@@ -192,4 +194,9 @@ class PropertyServiceImpl(
                 println("Email not sent, user email does not contain @gmail.com")
             }
         }
-    } }
+    }
+
+    override fun findBySaleOrRent(saleOrRent: SaleOrRent): List<PropertyDto> {
+        return propertyRepository.findBySaleOrRent(saleOrRent).map { property -> property.toPropertyDto() }.toList()
+    }
+}

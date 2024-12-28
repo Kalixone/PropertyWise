@@ -35,4 +35,18 @@ class CalculatorController(private val calculatorService: CalculatorService) {
     fun depositContributionCalculator(@RequestBody depositContributionRequest: DepositContributionRequest): DepositContributionResult {
         return calculatorService.depositContributionCalculator(depositContributionRequest)
     }
+
+    @PostMapping("/calculate-rental-yield")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Calculate rental yield", description = "Calculates the rental yield based on the provided monthly rental income and property purchase price.")
+    fun calculateRentalYield(@RequestBody rentalYieldCalculationRequest: RentalYieldCalculationRequest): RentalYieldCalculationResult {
+        return calculatorService.calculateRentalYield(rentalYieldCalculationRequest)
+    }
+
+    @PostMapping("/proportional-rental-cost")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Calculate proportional rental cost", description = "Calculates the rental cost per person based on shared space and total rent.")
+    fun calculateProportionalRentalCost(@RequestBody proportionalRentalCostRequest: ProportionalRentalCostRequest): ProportionalRentalCostResult {
+        return calculatorService.calculateProportionalRentalCost(proportionalRentalCostRequest)
+    }
 }

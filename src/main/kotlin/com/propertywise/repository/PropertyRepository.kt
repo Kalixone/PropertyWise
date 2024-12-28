@@ -1,6 +1,7 @@
 package com.propertywise.repository
 
 import com.propertywise.model.Property
+import com.propertywise.model.SaleOrRent
 import com.propertywise.model.Type
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -20,4 +21,7 @@ interface PropertyRepository: JpaRepository<Property, Long> {
     fun findByAreaBetween(from: Double, to: Double): List<Property>
 
     fun findByType(type: Type): List<Property>
+
+    @Query("SELECT p FROM Property p WHERE p.saleOrRent = :saleOrRent")
+    fun findBySaleOrRent(@Param("saleOrRent") saleOrRent: SaleOrRent): List<Property>
 }

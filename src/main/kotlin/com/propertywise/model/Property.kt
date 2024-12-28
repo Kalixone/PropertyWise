@@ -16,6 +16,8 @@ data class Property(
     var area: Double,
     @Enumerated(EnumType.STRING)
     var type: Type,
+    @Enumerated(EnumType.STRING)
+    var saleOrRent: SaleOrRent,
     @OneToOne(cascade = [CascadeType.ALL])
     val location: Location,
     @OneToOne(cascade = [CascadeType.ALL])
@@ -31,4 +33,8 @@ data class Property(
 
 enum class Type {
     APARTMENT, RESIDENCE, PLOT
+}
+
+enum class SaleOrRent {
+    SALE, RENT
 }

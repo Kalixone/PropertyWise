@@ -3,6 +3,7 @@ package com.propertywise.service.impl
 import com.propertywise.dto.*
 import com.propertywise.service.CalculatorService
 import org.springframework.stereotype.Service
+import java.text.DecimalFormat
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -47,9 +48,7 @@ class CalculatorServiceImpl: CalculatorService {
         val availableNetIncome = netIncome - maintenanceCosts - otherObligations
         val maximumLoanInstallment = availableNetIncome * 40 / 100
 
-        return LoanEligibilityCalculatorResult(
-            maximumLoanInstallment
-        )
+        return LoanEligibilityCalculatorResult(maximumLoanInstallment)
     }
 
     override fun depositContributionCalculator(request: DepositContributionRequest): DepositContributionResult {
@@ -58,8 +57,27 @@ class CalculatorServiceImpl: CalculatorService {
 
         val depositAmount = propertyValue * (depositPercentage / 100)
 
-        return DepositContributionResult(
-            depositAmount
-        )
+        return DepositContributionResult(depositAmount)
+    }
+
+    override fun calculateRentalYield(rentalYieldCalculationRequest: RentalYieldCalculationRequest): RentalYieldCalculationResult {
+        val monthlyRentalIncome = rentalYieldCalculationRequest.monthlyRentalIncome
+        val purchasePrice = rentalYieldCalculationRequest.purchasePrice
+
+        val returnOfInvestment = Math.round((monthlyRentalIncome * 12) / purchasePrice * 100 * 100.0) / 100.0
+
+        return RentalYieldCalculationResult("$returnOfInvestment%")
+    }
+
+    override fun calculateProportionalRentalCost(proportionalRentalCostRequest: ProportionalRentalCostRequest): ProportionalRentalCostResult {
+        val roomArea = proportionalRentalCostRequest.rentedRoomArea
+        val totalArea = proportionalRentalCostRequest.totalArea
+        val totalMonthlyRent = proportionalRentalCostRequest.totalMonthlyRent
+
+        val proportionalRentalCost = roomArea / totalArea * totalMonthlyRent
+
+        val roundedProportionalRentalCost = Math.round(proportionalRentalCost * 100.0) / 100.0
+
+        return ProportionalRentalCostResult(roundedProportionalRentalCost)
     }
 }

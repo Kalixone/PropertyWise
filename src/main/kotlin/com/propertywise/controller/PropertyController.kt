@@ -3,6 +3,7 @@ package com.propertywise.controller
 import com.propertywise.dto.CreatePropertyRequestDto
 import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
+import com.propertywise.model.SaleOrRent
 import com.propertywise.model.Type
 import com.propertywise.service.PropertyService
 import io.swagger.v3.oas.annotations.Operation
@@ -107,5 +108,12 @@ class PropertyController(private val propertyService: PropertyService) {
     @Operation(summary = "Get all properties from the user's favourites", description = "Allows a user to retrieve a list of all properties that have been added to their favourites. The user must be authenticated and have the 'USER' role.")
     fun getAllFavourites(authentication: Authentication): List<PropertyDto> {
         return propertyService.getAllFavourites(authentication)
+    }
+
+    @GetMapping("/filter")
+    @PreAuthorize("hasAuthority('USER')")
+    @Operation(summary = "Filter properties by sale or rent status", description = "Filters properties based on whether they are for sale or rent.")
+    fun getPropertiesBySaleOrRent(@RequestParam saleOrRent: SaleOrRent): List<PropertyDto> {
+        return propertyService.findBySaleOrRent(saleOrRent)
     }
  }

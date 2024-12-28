@@ -3,6 +3,8 @@ package com.propertywise.service
 import com.propertywise.dto.CreatePropertyRequestDto
 import com.propertywise.dto.PropertyDto
 import com.propertywise.dto.PropertyPatchRequestDto
+import com.propertywise.model.Property
+import com.propertywise.model.SaleOrRent
 import com.propertywise.model.Type
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
@@ -35,4 +37,6 @@ interface PropertyService {
     fun getAllFavourites(authentication: Authentication): List<PropertyDto>
 
     fun sendPropertyNotificationsToUser()
+
+    fun findBySaleOrRent(saleOrRent: SaleOrRent): List<PropertyDto>
 }
