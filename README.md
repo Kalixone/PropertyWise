@@ -113,7 +113,7 @@ The PropertyWise API provides a wide range of capabilities to enhance property m
 If you don't have an account yet, you must first register a new user. After registration, you will be able to log in and get your JWT Bearer token.
 
 User Registration Example
-![User Registration](https://imgur.com/gykgK06)
+![User Registration](https://i.imgur.com/gykgK06.png)
 *Screenshot showing the user registration process.*
 
 - **Log In:**
@@ -121,7 +121,7 @@ User Registration Example
 After registering, log in with your user credentials. You will receive a JWT Bearer token.
 
 User Login Example
-![User Login](https://imgur.com/ObtgHOU)
+![User Login](https://i.imgur.com/ObtgHOU.png)
 *Screenshot showing the user login process.*
 
 - **Include the Bearer Token:**
@@ -215,28 +215,28 @@ Important: Remember to include the Bearer token in the Authorization header of y
 Below you will find screenshots illustrating the functionalities of selected modules of the application. These are just a few examples—please refer to the full application details for a complete overview.
 
 ### User Registration:
-![User Registration](https://imgur.com/gykgK06)
+![User Registration](https://i.imgur.com/gykgK06.png)
 *Screenshot showing the user registration process.*
 
 ### User Login:
-![User Login](https://imgur.com/ObtgHOU)
+![User Login](https://i.imgur.com/ObtgHOU.png)
 *Screenshot showing the user login process.*
 
 ### Property Creation:
-![Property Creation](https://imgur.com/kI8xqEy)
+![Property Creation](https://i.imgur.com/kI8xqEy.png)
 *Screenshot showing the creation of a property.*
 
 ### Loan Calculation View:
-![Loan Calculation View](https://imgur.com/iamraq7)
+![Loan Calculation View](https://i.imgur.com/iamraq7.png)
 *Screenshot showing the results of the loan calculation.*
 
 ### Area Threshold Update View::
-![Area Threshold Update View:](https://imgur.com/dlghKoe)
+![Area Threshold Update View:](https://i.imgur.com/dlghKoe.png)
 *Screenshot showing the update of the area threshold for notifications for the logged-in user.*
 
 ### Email Sending:
-![Email Sending](https://imgur.com/BecvKGj)
-![Delivered Email](https://imgur.com/uSyeK8r)
+![Email Sending](https://i.imgur.com/BecvKGj.png)
+![Delivered Email](https://i.imgur.com/uSyeK8r.png)
 *Screenshot showing the email sending functionality in the application.*
 
 ---
